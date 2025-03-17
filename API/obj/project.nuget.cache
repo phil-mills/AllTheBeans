@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "ncxByJ11POjvtYTGx7TDoJiptMHxHBu+NfJ8Q4Zf40LFvnPWz/svX/Fxjb0ENao+fSzGZqHNLPAWqe5eWAblBg==",
+  "success": true,
+  "projectFilePath": "/Users/phil.mills/Documents/P_DEV/AllTheBeans/API/API.csproj",
+  "expectedPackageFiles": [
+    "/Users/phil.mills/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "/Users/phil.mills/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
+    "/Users/phil.mills/.nuget/packages/swashbuckle.aspnetcore/6.4.0/swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
+    "/Users/phil.mills/.nuget/packages/swashbuckle.aspnetcore.swagger/6.4.0/swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
+    "/Users/phil.mills/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.4.0/swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",
+    "/Users/phil.mills/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.4.0/swashbuckle.aspnetcore.swaggerui.6.4.0.nupkg.sha512"
+  ],
+  "logs": []
+}
