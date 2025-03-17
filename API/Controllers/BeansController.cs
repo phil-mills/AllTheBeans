@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+using Domain.Logic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -6,16 +8,20 @@ namespace API.Controllers;
 [Route("[controller]")]
 public class BeansController : ControllerBase
 {
-    private readonly ILogger<BeansController> _logger;
+    private readonly ILogger<BeansController> logger;
+    private readonly IGetBeanOfTheDay getBeanOfTheDay;
 
-    public BeansController(ILogger<BeansController> logger)
+    public BeansController(ILogger<BeansController> logger, IGetBeanOfTheDay getBeanOfTheDay)
     {
-        _logger = logger;
+        this.logger = logger;
+        this.getBeanOfTheDay = getBeanOfTheDay;
     }
 
-    [HttpGet(Name = "Get")]
-    public IActionResult Get()
+    [HttpGet(Name = "GetBeanOfTheDay")]
+    public async Task<IActionResult> Get()
     {
-       return Ok("Hello World");
+        var beanOfTheDay = await getBeanOfTheDay.GetBeanOfTheDayAsync();
+
+       return Ok(beanOfTheDay);
     }
 }

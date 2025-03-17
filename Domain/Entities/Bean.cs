@@ -30,5 +30,37 @@ namespace Domain.Entities
 
         [JsonPropertyName("Country")]
         public string Country { get; set; }
+
+        public Data.Entities.Bean ToDataBeans()
+        {
+            return new Data.Entities.Bean
+            {
+                Id = Id,
+                Index = Index,
+                IsBOTD = IsBOTD,
+                Cost = Cost,
+                Image = Image,
+                Colour = Colour,
+                Name = Name,
+                Description = Description,
+                Country = Country
+            };
+        }
+
+        public Bean FromDataBeans(Data.Entities.Bean bean)
+        {
+            return new Bean
+            {
+                Id = bean.Id,
+                Index = bean.Index,
+                IsBOTD = bean.IsBOTD,
+                Cost = bean.Cost,
+                Image = bean.Image,
+                Colour = bean.Colour,
+                Name = bean.Name,
+                Description = bean.Description,
+                Country = bean.Country
+            };
+        }
     }
 }
