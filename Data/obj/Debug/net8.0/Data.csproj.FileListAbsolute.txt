@@ -9,3 +9,4 @@
 /Users/phil.mills/Documents/P_DEV/AllTheBeans/Data/obj/Debug/net8.0/refint/Data.dll
 /Users/phil.mills/Documents/P_DEV/AllTheBeans/Data/obj/Debug/net8.0/Data.pdb
 /Users/phil.mills/Documents/P_DEV/AllTheBeans/Data/obj/Debug/net8.0/ref/Data.dll
+/Users/phil.mills/Documents/P_DEV/AllTheBeans/Data/obj/Debug/net8.0/Data.sourcelink.json

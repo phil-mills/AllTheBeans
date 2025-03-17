@@ -30,3 +30,8 @@
 /Users/phil.mills/Documents/P_DEV/AllTheBeans/API/obj/Debug/net8.0/API.pdb
 /Users/phil.mills/Documents/P_DEV/AllTheBeans/API/obj/Debug/net8.0/API.genruntimeconfig.cache
 /Users/phil.mills/Documents/P_DEV/AllTheBeans/API/obj/Debug/net8.0/ref/API.dll
+/Users/phil.mills/Documents/P_DEV/AllTheBeans/API/bin/Debug/net8.0/Data.dll
+/Users/phil.mills/Documents/P_DEV/AllTheBeans/API/bin/Debug/net8.0/Domain.dll
+/Users/phil.mills/Documents/P_DEV/AllTheBeans/API/bin/Debug/net8.0/Domain.pdb
+/Users/phil.mills/Documents/P_DEV/AllTheBeans/API/bin/Debug/net8.0/Data.pdb
+/Users/phil.mills/Documents/P_DEV/AllTheBeans/API/obj/Debug/net8.0/API.sourcelink.json

@@ -9,3 +9,8 @@
 /Users/phil.mills/Documents/P_DEV/AllTheBeans/Domain/obj/Debug/net8.0/refint/Domain.dll
 /Users/phil.mills/Documents/P_DEV/AllTheBeans/Domain/obj/Debug/net8.0/Domain.pdb
 /Users/phil.mills/Documents/P_DEV/AllTheBeans/Domain/obj/Debug/net8.0/ref/Domain.dll
+/Users/phil.mills/Documents/P_DEV/AllTheBeans/Domain/bin/Debug/net8.0/Data.dll
+/Users/phil.mills/Documents/P_DEV/AllTheBeans/Domain/bin/Debug/net8.0/Data.pdb
+/Users/phil.mills/Documents/P_DEV/AllTheBeans/Domain/obj/Debug/net8.0/Domain.csproj.AssemblyReference.cache
+/Users/phil.mills/Documents/P_DEV/AllTheBeans/Domain/obj/Debug/net8.0/Domain.sourcelink.json
+/Users/phil.mills/Documents/P_DEV/AllTheBeans/Domain/obj/Debug/net8.0/Domain.csproj.Up2Date
