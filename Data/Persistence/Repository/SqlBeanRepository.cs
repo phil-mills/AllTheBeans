@@ -13,55 +13,57 @@ namespace Data.Persistence.Repository
             this.context = context;
         }
 
-        public async Task CreateBeanAsync(Bean bean)
+        public async Task<string> CreateBeanAsync(Bean bean)
         {
-            await using (context)
+            await using (this.context)
             {
-                await context.Beans.AddAsync(bean);
-                await context.SaveChangesAsync();
+                await this.context.Beans.AddAsync(bean);
+                await this.context.SaveChangesAsync();
+
+                return this.context.Beans.FirstOrDefault(b => b.Id == bean.Id).Id;
             }
         }
 
         public async Task CreateBeansAsync(List<Bean> beans)
         {
-            await using (context)
+            await using (this.context)
             {
-                await context.Beans.AddRangeAsync(beans);
-                await context.SaveChangesAsync();
+                await this.context.Beans.AddRangeAsync(beans);
+                await this.context.SaveChangesAsync();
             }
         }
 
         public async Task UpdateBeanAsync(Bean bean)
         {
-            await using (context)
+            await using (this.context)
             {
-                context.Beans.UpdateRange(bean);
-                await context.SaveChangesAsync();
+                this.context.Beans.UpdateRange(bean);
+                await this.context.SaveChangesAsync();
             }
         }
 
-        public async Task DeleteBeansAsync(Bean bean)
+        public async Task DeleteBeanAsync(Bean bean)
         {
-            await using (context)
+            await using (this.context)
             {
-                context.Beans.RemoveRange(bean);
-                await context.SaveChangesAsync();
+                this.context.Beans.RemoveRange(bean);
+                await this.context.SaveChangesAsync();
             }
         }
 
         public async Task<Bean> GetBeanAsync(string id)
         {
-            await using (context)
+            await using (this.context)
             {
-                return await context.Beans.FirstOrDefaultAsync(b => b.Id == id);
+                return await this.context.Beans.FirstOrDefaultAsync(b => b.Id == id);
             }
         }
 
         public async Task<Bean> GetBeanOfTheDayAsync()
         {
-            await using (context)
+            await using (this.context)
             {
-                return await context.Beans.FirstOrDefaultAsync();
+                return await this.context.Beans.FirstOrDefaultAsync();
             }
         }
     }
