@@ -38,12 +38,6 @@ namespace Domain.Entities
                 Id = Id,
                 Index = Index,
                 IsBOTD = IsBOTD,
-                Cost = Cost,
-                Image = Image,
-                Colour = Colour,
-                Name = Name,
-                Description = Description,
-                Country = Country
             };
         }
 
@@ -54,12 +48,6 @@ namespace Domain.Entities
                 Id = bean.Id,
                 Index = bean.Index,
                 IsBOTD = bean.IsBOTD,
-                Cost = bean.Cost,
-                Image = bean.Image,
-                Colour = bean.Colour,
-                Name = bean.Name,
-                Description = bean.Description,
-                Country = bean.Country
             };
         }
     }

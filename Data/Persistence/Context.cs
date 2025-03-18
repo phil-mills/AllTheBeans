@@ -6,6 +6,10 @@ namespace Data.Persistence
     public class Context : DbContext
     {
          public DbSet<Bean> Beans { get; set; } 
+         
+         public DbSet<Details> Details { get; set; } 
+
+         public DbSet<Price> Prices { get; set; } 
 
         public Context(DbContextOptions options) : base(options)
         { }

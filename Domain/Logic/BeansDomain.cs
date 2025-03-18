@@ -16,11 +16,17 @@ namespace Domain.Logic
         public async Task<string> CreateBeanAsync(Bean bean)
         {
             return await this.beansRepository.CreateBeanAsync(bean.ToDataBeans());
+            // create bean price
+
+            // create bean deatils
         }
 
         public async Task UpdateBeanAsync(Bean bean)
         {
             await this.beansRepository.UpdateBeanAsync(bean.ToDataBeans());
+            // create bean price
+
+            // create bean deatils
         }
 
         public async Task<bool> DeleteBeanAsync(string id)
@@ -32,12 +38,20 @@ namespace Domain.Logic
         {
             var bean = await this.beansRepository.GetBeanAsync(id);
 
+            // get bean prie
+
+            // get bean deatils
+
             return new Bean().FromDataBeans(bean);
         }
 
         public async Task<Bean> GetBeanOfTheDayAsync()
         {
             var bean = await this.beansRepository.GetBeanOfTheDayAsync();
+
+            // get bean prie
+
+            // get bean deatils
 
             return new Bean().FromDataBeans(bean);
         }

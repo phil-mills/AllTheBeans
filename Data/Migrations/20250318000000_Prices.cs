@@ -5,7 +5,7 @@
 namespace Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Beans : Migration
+    public partial class Prices : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,13 +14,14 @@ namespace Data.Migrations
                 name: "Beans",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Index = table.Column<int>(type: "int", nullable: false),
-                    IsBOTD = table.Column<bool>(type: "bit", nullable: false)
+                    Id = table.Column<Guid>(type: "nvarchar(450)", nullable: false),
+                    BeanId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Cost = table.Column<string>(type: "nvarchar(max)", nullable: false),
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Beans", x => x.Id);
+                    table.PrimaryKey("PK_Prices", x => x.Id);
+                    table.PrimaryKey("FK_Beans", x => x.BeanId);
                 });
         }
 
