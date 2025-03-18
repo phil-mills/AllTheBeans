@@ -41,11 +41,29 @@ public class BeansController : ControllerBase
     }
 
     [HttpDelete(Name = "DeleteBean")]
-    public async Task<IActionResult> DeleteBean(Bean bean)
+    public async Task<IActionResult> DeleteBean(string id)
     {
-        await this.beansDomain.DeleteBeanAsync(bean.ToDomainBean());
+        var result = await this.beansDomain.DeleteBeanAsync(id);
 
-        return NoContent();
+        if (result)
+        {
+            return Ok();
+        }
+
+        return NotFound();
+    }
+
+    [HttpGet(Name = "GetById")]
+    public async Task<IActionResult> GetBean(string id)
+    {
+        var bean = await this.beansDomain.GetBeanAsync(id);
+
+        if (bean != null)
+        {
+            return Ok(bean);
+        }
+
+        return NotFound();
     }
 
     [HttpGet(Name = "GetBeanOfTheDay")]

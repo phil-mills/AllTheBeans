@@ -23,9 +23,9 @@ namespace Domain.Logic
             await this.beansRepository.UpdateBeanAsync(bean.ToDataBeans());
         }
 
-        public async Task DeleteBeanAsync(Bean bean)
+        public async Task<bool> DeleteBeanAsync(string id)
         {
-            await this.beansRepository.DeleteBeanAsync(bean.ToDataBeans());
+            return await this.beansRepository.DeleteBeanAsync(id);
         }
 
         public async Task<Bean> GetBeanAsync(string id)

@@ -42,12 +42,19 @@ namespace Data.Persistence.Repository
             }
         }
 
-        public async Task DeleteBeanAsync(Bean bean)
+        public async Task<bool> DeleteBeanAsync(string id)
         {
             await using (this.context)
             {
-                this.context.Beans.RemoveRange(bean);
-                await this.context.SaveChangesAsync();
+                var bean = await this.context.Beans.FirstOrDefaultAsync(b => b.Id == id);
+                if (bean != null)
+                {
+                    this.context.Beans.Remove(bean);
+                    await this.context.SaveChangesAsync();
+                    return true;
+                }
+
+                return false;
             }
         }
 

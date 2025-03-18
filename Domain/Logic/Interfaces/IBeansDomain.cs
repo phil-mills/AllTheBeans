@@ -8,7 +8,7 @@ namespace Domain.Logic.Interfaces
 
         public Task UpdateBeanAsync(Bean bean);
 
-        public Task DeleteBeanAsync(Bean bean);
+        public Task<bool> DeleteBeanAsync(string id);
 
         public Task<Bean> GetBeanAsync(string id);
 
