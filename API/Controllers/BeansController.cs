@@ -72,9 +72,9 @@ public class BeansController : ControllerBase
     }
 
     [HttpGet("all")]
-    public async Task<IActionResult> GetBeans(string[] filters)
+    public async Task<IActionResult> GetBeans()
     {
-        var beans = await this.beansDomain.GetAllBeanAsync(filters);
+        var beans = await this.beansDomain.GetAllBeanAsync();
 
         return Ok(beans);
     }

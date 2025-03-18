@@ -58,7 +58,7 @@ namespace Domain.Logic
             return new Bean().FromDataEntity(bean);
         }
 
-        public async Task<IEnumerable<Bean>> GetAllBeanAsync(string[] filters = null)
+        public async Task<IEnumerable<Bean>> GetAllBeanAsync()
         {
             var beans = await this.beansRepository.GetAllBeansAsync();
 

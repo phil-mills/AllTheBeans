@@ -71,11 +71,12 @@ namespace Data.Persistence.Repository
             return bean;
         }
 
-        public async Task<IEnumerable<Bean>> GetAllBeansAsync(string[] filters = null)
+        public async Task<IEnumerable<Bean>> GetAllBeansAsync()
         {
-            // try implement some dynamic filtering
-
-            var beans = await this.context.Beans.ToListAsync();
+            var beans = await this.context.Beans
+            .Include(b => b.Price)
+            .Include(b => b.Details)
+            .ToListAsync();
 
             return beans;
         }
