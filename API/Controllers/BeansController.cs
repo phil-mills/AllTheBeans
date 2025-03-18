@@ -72,9 +72,9 @@ public class BeansController : ControllerBase
     }
 
     [HttpGet("all")]
-    public async Task<IActionResult> GetBeans()
+    public async Task<IActionResult> GetBeans([FromQuery] Filters filters)
     {
-        var beans = await this.beansDomain.GetAllBeanAsync();
+        var beans = await this.beansDomain.GetAllBeanAsync(filters.ToDomainEntity());
 
         return Ok(beans);
     }

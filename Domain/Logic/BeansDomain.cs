@@ -58,9 +58,29 @@ namespace Domain.Logic
             return new Bean().FromDataEntity(bean);
         }
 
-        public async Task<IEnumerable<Bean>> GetAllBeanAsync()
+        public async Task<IEnumerable<Bean>> GetAllBeanAsync(Filters filters)
         {
             var beans = await this.beansRepository.GetAllBeansAsync();
+        
+            if (filters.Price != null)
+            {
+                beans = beans.Where(bean => double.Parse(bean.Price.Cost.Replace("£", "")) <= filters.Price);
+            }
+
+            if (!string.IsNullOrEmpty(filters.Name))
+            {
+                beans = beans.Where(bean => bean.Details.Name.Contains(filters.Name));
+            }
+
+            if (!string.IsNullOrEmpty(filters.Colour))
+            {
+                beans = beans.Where(bean => bean.Details.Colour.Contains(filters.Colour));
+            }
+
+            if (!string.IsNullOrEmpty(filters.Country))
+            {
+                beans = beans.Where(bean => bean.Details.Country.Contains(filters.Country));
+            }
 
             return beans.Select(bean => new Bean().FromDataEntity(bean));
         }

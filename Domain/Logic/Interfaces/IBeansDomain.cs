@@ -12,7 +12,7 @@ namespace Domain.Logic.Interfaces
 
         public Task<Bean> GetBeanAsync(string id);
 
-        public Task<IEnumerable<Bean>> GetAllBeanAsync();
+        public Task<IEnumerable<Bean>> GetAllBeanAsync(Filters filters);
 
         public Task<Bean> GetBeanOfTheDayAsync();
     }
