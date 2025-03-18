@@ -14,5 +14,11 @@ namespace Data.Persistence
         {
             base.OnModelCreating(builder);
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
+        { 
+            optionsBuilder.UseInMemoryDatabase("AllTheBeans"); 
+            base.OnConfiguring(optionsBuilder);
+        } 
     }
 }

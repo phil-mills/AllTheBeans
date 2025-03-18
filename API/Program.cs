@@ -9,13 +9,10 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddMvc();
-builder.Services.AddDbContext<Context>(
-    options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
-    options => options.MigrationsAssembly("Data"))
-);
 
+builder.Services.AddDbContext<Context>(options => options.UseInMemoryDatabase("AllTheBeans"));
 builder.Services.AddScoped<IBeansRepository, SqlBeanRepository>();
-builder.Services.AddScoped<IGetBeanOfTheDay, GetBeanOfTheDay>();
+builder.Services.AddScoped<IBeansDomain, BeansDomain>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

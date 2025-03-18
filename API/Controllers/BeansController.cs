@@ -48,19 +48,6 @@ public class BeansController : ControllerBase
         return NoContent();
     }
 
-    [HttpGet(Name = "GetBean")]
-    public async Task<IActionResult> GetBean(string id)
-    {
-        var bean = await this.beansDomain.GetBeanAsync(id);
-
-        if (bean != null)
-        {
-            return Ok(bean);
-        }
-
-       return NotFound();
-    }
-
     [HttpGet(Name = "GetBeanOfTheDay")]
     public async Task<IActionResult> GetBeanOfTheDay()
     {
