@@ -7,5 +7,9 @@ namespace Data.Entities
         public int Index { get; set; }
 
         public bool IsBOTD { get; set; }
+
+        public Price Price { get; set; }
+
+        public Details Details { get; set; }
     }
 }

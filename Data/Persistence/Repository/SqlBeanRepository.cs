@@ -18,7 +18,7 @@ namespace Data.Persistence.Repository
             await this.context.Beans.AddAsync(bean);
             await this.context.SaveChangesAsync();
 
-            return this.context.Beans.FirstOrDefault(b => b.Id == bean.Id).Id;
+            return (await this.GetBeanAsync(bean.Id)).Id;
         }
 
         public async Task CreateBeansAsync(IEnumerable<Bean> beans)
@@ -29,20 +29,31 @@ namespace Data.Persistence.Repository
 
         public async Task<string> UpdateBeanAsync(Bean bean)
         {
-            this.context.Beans.UpdateRange(bean);
+            var existingBean = await this.context.Beans.FindAsync(bean.Id);
+
+            if (existingBean != null)
+            {
+                this.context.Entry(existingBean).CurrentValues.SetValues(bean);
+            }
+            else
+            {
+                await this.context.Beans.AddAsync(bean);
+            }
+            
             await this.context.SaveChangesAsync();
 
-            return this.context.Beans.FirstOrDefault(b => b.Id == bean.Id).Id;
+            return (await this.GetBeanAsync(bean.Id)).Id;
         }
 
         public async Task<bool> DeleteBeanAsync(string id)
         {
-            var bean = await this.context.Beans.FirstOrDefaultAsync(b => b.Id == id);
+            var bean = await this.GetBeanAsync(id);
             
             if (bean != null)
             {
                 this.context.Beans.Remove(bean);
                 await this.context.SaveChangesAsync();
+                
                 return true;
             }
 
@@ -51,17 +62,33 @@ namespace Data.Persistence.Repository
 
         public async Task<Bean> GetBeanAsync(string id)
         {
-            return await this.context.Beans.FirstOrDefaultAsync(b => b.Id == id);
+            var bean = await this.context.Beans
+            .Include(b => b.Price)
+            .Include(b => b.Details)
+            .Where(b => b.Id == id)
+            .FirstOrDefaultAsync();
+
+            return bean;
         }
 
-        public async Task<IEnumerable<Bean>> GetAllBeansAsync()
+        public async Task<IEnumerable<Bean>> GetAllBeansAsync(string[] filters = null)
         {
-            return await this.context.Beans.ToListAsync();
+            // try implement some dynamic filtering
+
+            var beans = await this.context.Beans.ToListAsync();
+
+            return beans;
         }
 
         public async Task<Bean> GetBeanOfTheDayAsync()
         {
-            return await this.context.Beans.FirstOrDefaultAsync(b => b.IsBOTD);
+            var bean = await this.context.Beans
+            .Include(b => b.Price)
+            .Include(b => b.Details)
+            .Where(b => b.IsBOTD == true)
+            .FirstOrDefaultAsync();
+
+            return bean;
         }
     }
 }

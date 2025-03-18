@@ -12,6 +12,8 @@ namespace Domain.Logic.Interfaces
 
         public Task<Bean> GetBeanAsync(string id);
 
+        public Task<IEnumerable<Bean>> GetAllBeanAsync(string[] filters = null);
+
         public Task<Bean> GetBeanOfTheDayAsync();
     }
 }

@@ -15,13 +15,11 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    BeanId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Cost = table.Column<string>(type: "nvarchar(max)", nullable: false),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Prices", x => x.Id);
-                    table.PrimaryKey("FK_Beans", x => x.BeanId);
                 });
         }
 

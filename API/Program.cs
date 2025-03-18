@@ -11,9 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMvc();
 builder.Services.AddDbContext<Context>(options => options.UseInMemoryDatabase("AllTheBeans"));
 builder.Services.AddScoped<IBeansRepository, SqlBeanRepository>();
-builder.Services.AddScoped<IPricesRepository, SqlPricesRepository>();
-builder.Services.AddScoped<IDetailsRepository, SqlDetailsRepository>();
 builder.Services.AddScoped<IBeansDomain, BeansDomain>();
+builder.Services.AddScoped<IBOTDRepository, BOTDRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -40,10 +39,8 @@ app.Lifetime.ApplicationStarted.Register(async () =>
     using (var scope = app.Services.CreateScope())
     {
         var beansRepository = scope.ServiceProvider.GetRequiredService<IBeansRepository>();
-        var pricesRepository = scope.ServiceProvider.GetRequiredService<IPricesRepository>();
-        var detailsRepository = scope.ServiceProvider.GetRequiredService<IDetailsRepository>();
         var botdRepository = scope.ServiceProvider.GetRequiredService<IBOTDRepository>();
-        await new BeansMiddleware(beansRepository, pricesRepository, detailsRepository, botdRepository).RunAsync();
+        await new BeansMiddleware(beansRepository, botdRepository).RunAsync();
         await new BOTDMiddleware(beansRepository, botdRepository).RunAsync();
     }
 });

@@ -26,7 +26,7 @@ public class BeansController : ControllerBase
 
         if (createdBeanId != null)
         {
-             return CreatedAtRoute("Created Bean Id: ", new { id = createdBeanId });
+             return Created("Id: ", new { id = createdBeanId });
         }
     
         return BadRequest();
@@ -45,7 +45,7 @@ public class BeansController : ControllerBase
         return BadRequest();
     }
 
-    [HttpDelete]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteBean(string id)
     {
         var result = await this.beansDomain.DeleteBeanAsync(id);
@@ -71,7 +71,15 @@ public class BeansController : ControllerBase
         return NotFound();
     }
 
-    [HttpGet("BOTD")]
+    [HttpGet("all")]
+    public async Task<IActionResult> GetBeans(string[] filters)
+    {
+        var beans = await this.beansDomain.GetAllBeanAsync(filters);
+
+        return Ok(beans);
+    }
+
+    [HttpGet("botd")]
     public async Task<IActionResult> GetBeanOfTheDay()
     {
         var beanOfTheDay = await this.beansDomain.GetBeanOfTheDayAsync();

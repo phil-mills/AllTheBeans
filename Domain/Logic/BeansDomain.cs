@@ -8,26 +8,20 @@ namespace Domain.Logic
     {
         private readonly IBeansRepository beansRepository;
 
-        private readonly IPricesRepository pricesRepository;
-        
-        private readonly IDetailsRepository detailsRepository;
-
-        public BeansDomain(IBeansRepository beansRepository, IPricesRepository pricesRepository, IDetailsRepository detailsRepository)
+        public BeansDomain(IBeansRepository beansRepository)
         {
             this.beansRepository = beansRepository;
-            this.pricesRepository = pricesRepository;
-            this.detailsRepository = detailsRepository;
         }
 
         public async Task<string> CreateBeanAsync(Bean bean)
         {
-            var beanId = await this.beansRepository.CreateBeanAsync(bean.ToDataBeans());
+            var dataBean = bean.ToDataEntity();
+            dataBean.Details.Id = Guid.NewGuid().ToString();
+            dataBean.Price.Id = Guid.NewGuid().ToString();
 
-            var priceId = await this.pricesRepository.CreatePriceAsync(bean.ToDataPrice());
+            var beanId = await this.beansRepository.CreateBeanAsync(dataBean);
 
-            var detailsId = await this.detailsRepository.CreateDetailsAsync(bean.ToDataDetails());
-
-            if (beanId != null && priceId != null && detailsId != null)
+            if (beanId != null)
             {
                 return beanId;
             }
@@ -37,13 +31,9 @@ namespace Domain.Logic
 
         public async Task<string> UpdateBeanAsync(Bean bean)
         {
-            var beanId = await this.beansRepository.UpdateBeanAsync(bean.ToDataBeans());
+            var beanId = await this.beansRepository.UpdateBeanAsync(bean.ToDataEntity());
 
-            var priceId = await this.pricesRepository.UpdatePriceAsync(bean.ToDataPrice());
-
-            var detailsId = await this.detailsRepository.UpdateDetailsAsync(bean.ToDataDetails());
-
-            if (beanId != null && priceId != null && detailsId != null)
+            if (beanId != null)
             {
                 return beanId;
             }
@@ -65,47 +55,21 @@ namespace Domain.Logic
                 return null;
             }
 
-            var price = await this.pricesRepository.GetPriceByBeanIdAsync(bean.Id);
-            
-            if (price == null)
-            {
-                return null;
-            }
+            return new Bean().FromDataEntity(bean);
+        }
 
-            var details = await this.detailsRepository.GetDetailsByBeanIdAsync(bean.Id);
+        public async Task<IEnumerable<Bean>> GetAllBeanAsync(string[] filters = null)
+        {
+            var beans = await this.beansRepository.GetAllBeansAsync();
 
-            if (details == null)
-            {
-                return null;
-            }
-
-            return new Bean().FromDataEntities(bean, price, details);
+            return beans.Select(bean => new Bean().FromDataEntity(bean));
         }
 
         public async Task<Bean> GetBeanOfTheDayAsync()
         {
             var bean = await this.beansRepository.GetBeanOfTheDayAsync();
 
-            if (bean == null)
-            {
-                return null;
-            }
-
-            var price = await this.pricesRepository.GetPriceByBeanIdAsync(bean.Id);
-            
-            if (price == null)
-            {
-                return null;
-            }
-
-            var details = await this.detailsRepository.GetDetailsByBeanIdAsync(bean.Id);
-
-            if (details == null)
-            {
-                return null;
-            }
-
-            return new Bean().FromDataEntities(bean, price, details);
+            return new Bean().FromDataEntity(bean);
         }
     }
 }

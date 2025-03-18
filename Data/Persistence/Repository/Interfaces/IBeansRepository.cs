@@ -14,7 +14,7 @@ namespace Data.Persistence.Repository.Interfaces
 
         public Task<Bean> GetBeanAsync(string id);
 
-        public Task<IEnumerable<Bean>> GetAllBeansAsync();
+        public Task<IEnumerable<Bean>> GetAllBeansAsync(string[] filters = null);
 
         public Task<Bean> GetBeanOfTheDayAsync();
     }

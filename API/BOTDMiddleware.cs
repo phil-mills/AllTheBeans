@@ -21,19 +21,23 @@ namespace API
 
             if (botd.DateTime >= DateTime.Now)
             {
-                var bean = await this.beansRepository.GetBeanAsync(botd.BeanId);
-
                 var beans = await this.beansRepository.GetAllBeansAsync();
+                var oldBOTD = beans.FirstOrDefault(b => b.Id == botd.BeanId);
 
-                var newBOTD = beans.FirstOrDefault(b => b.Index == bean.Index + 1);
+                var newBOTD = beans.FirstOrDefault(b => b.Index == oldBOTD?.Index + 1);
+
+                if (newBOTD == null)
+                {
+                    newBOTD = beans.FirstOrDefault(b => b.Index == 0);
+                }
                 
-                bean.IsBOTD = false;
+                oldBOTD.IsBOTD = false;
                 newBOTD.IsBOTD = true;
 
                 botd.BeanId = newBOTD.Id;
                 botd.DateTime = DateTime.Now.Date.AddDays(1);
 
-                await this.beansRepository.UpdateBeanAsync(bean);
+                await this.beansRepository.UpdateBeanAsync(oldBOTD);
                 await this.botdRepository.UpdateBOTDAsync(botd);
             }
         }

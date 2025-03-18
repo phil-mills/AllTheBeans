@@ -27,8 +27,13 @@ namespace Data.Persistence.Repository
 
         public async Task UpdateBOTDAsync(BOTD botd)
         {
-            this.context.BOTD.UpdateRange(botd);
-            await this.context.SaveChangesAsync();
+            var existingBean = await this.context.BOTD.FindAsync(botd.Id);
+
+            if (existingBean != null)
+            {
+                this.context.Entry(existingBean).CurrentValues.SetValues(botd);
+                await this.context.SaveChangesAsync();
+            }
         }
 
         public Task<BOTD> GetBOTDAsync()

@@ -43,7 +43,18 @@ namespace API.Controllers.Entities
 
         public Domain.Entities.Bean ToDomainBean()
         {
-            return new Domain.Entities.Bean();
+            return new Domain.Entities.Bean
+            {
+                Id = this.Id,
+                Index = this.Index,
+                IsBOTD = this.IsBOTD,
+                Cost = this.Cost,
+                Image = this.Image,
+                Colour = this.Colour,
+                Name = this.Name,
+                Description = this.Description,
+                Country = this.Country
+            };
         }
     }
 }

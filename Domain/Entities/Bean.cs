@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Data.Entities;
 
 namespace Domain.Entities
 {
@@ -31,53 +32,41 @@ namespace Domain.Entities
         [JsonPropertyName("Country")]
         public string Country { get; set; }
 
-        public Data.Entities.Bean ToDataBeans()
+        public Data.Entities.Bean ToDataEntity()
         {
             return new Data.Entities.Bean
             {
                 Id = this.Id,
                 Index = this.Index,
-                IsBOTD = this.IsBOTD
+                IsBOTD = this.IsBOTD,
+                Price = new Data.Entities.Price
+                {
+                    Cost = this.Cost
+                },
+                Details = new Data.Entities.Details
+                {
+                    Image = this.Image,
+                    Colour = this.Colour,
+                    Name = this.Name,
+                    Description = this.Description,
+                    Country = this.Country
+                }
             };
         }
 
-        public Data.Entities.Price ToDataPrice()
-        {
-            return new Data.Entities.Price
-            {
-                Id = Guid.NewGuid().ToString(),
-                BeanId = this.Id,
-                Cost = this.Cost
-            };
-        }
-
-        public Data.Entities.Details ToDataDetails()
-        {
-            return new Data.Entities.Details
-            {
-                Id = Guid.NewGuid().ToString(),
-                BeanId = this.Id,
-                Description = this.Description,
-                Image = this.Image,
-                Colour = this.Colour,
-                Name = this.Name,
-                Country = this.Country
-            };
-        }
-
-        public Bean FromDataEntities(Data.Entities.Bean bean, Data.Entities.Price price, Data.Entities.Details details)
+        public Bean FromDataEntity(Data.Entities.Bean bean)
         {
             return new Bean
             {
                 Id = bean.Id,
                 Index = bean.Index,
                 IsBOTD = bean.IsBOTD,
-                Cost = price.Cost,
-                Image = details.Image,
-                Colour = details.Colour,
-                Name = details.Name,
-                Description = details.Description,
-                Country = details.Country
+                Cost = bean.Price.Cost,
+                Image = bean.Details.Image,
+                Colour = bean.Details.Colour,
+                Name = bean.Details.Name,
+                Description = bean.Details.Description,
+                Country = bean.Details.Country
             };
         }
     }
