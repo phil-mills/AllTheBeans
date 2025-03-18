@@ -6,13 +6,15 @@ namespace Data.Persistence.Repository.Interfaces
     {
         public Task<string> CreateBeanAsync(Bean beans);
 
-        public Task CreateBeansAsync(List<Bean> beans);
+        public Task CreateBeansAsync(IEnumerable<Bean> beans);
 
-        public Task UpdateBeanAsync(Bean bean);
+        public Task<string> UpdateBeanAsync(Bean bean);
 
         public Task<bool> DeleteBeanAsync(string id);
 
         public Task<Bean> GetBeanAsync(string id);
+
+        public Task<IEnumerable<Bean>> GetAllBeansAsync();
 
         public Task<Bean> GetBeanOfTheDayAsync();
     }

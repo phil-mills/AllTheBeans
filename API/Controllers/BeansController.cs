@@ -35,9 +35,14 @@ public class BeansController : ControllerBase
     [HttpPatch(Name = "PatchBean")]
     public async Task<IActionResult> PatchBean(Bean bean)
     {
-        await this.beansDomain.UpdateBeanAsync(bean.ToDomainBean());
+        var updatedBeanId = await this.beansDomain.UpdateBeanAsync(bean.ToDomainBean());
 
-        return NoContent();
+        if (updatedBeanId != null)
+        {
+             return Ok();
+        }
+    
+        return BadRequest();
     }
 
     [HttpDelete(Name = "DeleteBean")]

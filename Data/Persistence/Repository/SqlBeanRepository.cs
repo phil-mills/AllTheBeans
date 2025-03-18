@@ -24,7 +24,7 @@ namespace Data.Persistence.Repository
             }
         }
 
-        public async Task CreateBeansAsync(List<Bean> beans)
+        public async Task CreateBeansAsync(IEnumerable<Bean> beans)
         {
             await using (this.context)
             {
@@ -33,12 +33,14 @@ namespace Data.Persistence.Repository
             }
         }
 
-        public async Task UpdateBeanAsync(Bean bean)
+        public async Task<string> UpdateBeanAsync(Bean bean)
         {
             await using (this.context)
             {
                 this.context.Beans.UpdateRange(bean);
                 await this.context.SaveChangesAsync();
+
+                return this.context.Beans.FirstOrDefault(b => b.Id == bean.Id).Id;
             }
         }
 
@@ -47,6 +49,7 @@ namespace Data.Persistence.Repository
             await using (this.context)
             {
                 var bean = await this.context.Beans.FirstOrDefaultAsync(b => b.Id == id);
+                
                 if (bean != null)
                 {
                     this.context.Beans.Remove(bean);
@@ -66,11 +69,19 @@ namespace Data.Persistence.Repository
             }
         }
 
+        public async Task<IEnumerable<Bean>> GetAllBeansAsync()
+        {
+            await using (this.context)
+            {
+                return await this.context.Beans.ToListAsync();
+            }
+        }
+
         public async Task<Bean> GetBeanOfTheDayAsync()
         {
             await using (this.context)
             {
-                return await this.context.Beans.FirstOrDefaultAsync();
+                return await this.context.Beans.FirstOrDefaultAsync(b => b.IsBOTD);
             }
         }
     }

@@ -35,19 +35,49 @@ namespace Domain.Entities
         {
             return new Data.Entities.Bean
             {
-                Id = Id,
-                Index = Index,
-                IsBOTD = IsBOTD,
+                Id = this.Id,
+                Index = this.Index,
+                IsBOTD = this.IsBOTD
             };
         }
 
-        public Bean FromDataBeans(Data.Entities.Bean bean)
+        public Data.Entities.Price ToDataPrice()
+        {
+            return new Data.Entities.Price
+            {
+                Id = Guid.NewGuid().ToString(),
+                BeanId = this.Id,
+                Cost = this.Cost
+            };
+        }
+
+        public Data.Entities.Details ToDataDetails()
+        {
+            return new Data.Entities.Details
+            {
+                Id = Guid.NewGuid().ToString(),
+                BeanId = this.Id,
+                Description = this.Description,
+                Image = this.Image,
+                Colour = this.Colour,
+                Name = this.Name,
+                Country = this.Country
+            };
+        }
+
+        public Bean FromDataEntities(Data.Entities.Bean bean, Data.Entities.Price price, Data.Entities.Details details)
         {
             return new Bean
             {
                 Id = bean.Id,
                 Index = bean.Index,
                 IsBOTD = bean.IsBOTD,
+                Cost = price.Cost,
+                Image = details.Image,
+                Colour = details.Colour,
+                Name = details.Name,
+                Description = details.Description,
+                Country = details.Country
             };
         }
     }

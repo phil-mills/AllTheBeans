@@ -14,7 +14,7 @@ namespace Data.Migrations
                 name: "Beans",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     BeanId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Cost = table.Column<string>(type: "nvarchar(max)", nullable: false),
                 },

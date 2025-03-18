@@ -8,25 +8,47 @@ namespace Domain.Logic
     {
         private readonly IBeansRepository beansRepository;
 
-        public BeansDomain(IBeansRepository beansRepository)
+        private readonly IPricesRepository pricesRepository;
+        
+        private readonly IDetailsRepository detailsRepository;
+
+        public BeansDomain(IBeansRepository beansRepository, IPricesRepository pricesRepository, IDetailsRepository detailsRepository)
         {
             this.beansRepository = beansRepository;
+            this.pricesRepository = pricesRepository;
+            this.detailsRepository = detailsRepository;
         }
 
         public async Task<string> CreateBeanAsync(Bean bean)
         {
-            return await this.beansRepository.CreateBeanAsync(bean.ToDataBeans());
-            // create bean price
+            var beanId = await this.beansRepository.CreateBeanAsync(bean.ToDataBeans());
 
-            // create bean deatils
+            var priceId = await this.pricesRepository.CreatePriceAsync(bean.ToDataPrice());
+
+            var detailsId = await this.detailsRepository.CreateDetailsAsync(bean.ToDataDetails());
+
+            if (beanId != null && priceId != null && detailsId != null)
+            {
+                return beanId;
+            }
+
+            return null;
         }
 
-        public async Task UpdateBeanAsync(Bean bean)
+        public async Task<string> UpdateBeanAsync(Bean bean)
         {
-            await this.beansRepository.UpdateBeanAsync(bean.ToDataBeans());
-            // create bean price
+            var beanId = await this.beansRepository.UpdateBeanAsync(bean.ToDataBeans());
 
-            // create bean deatils
+            var priceId = await this.pricesRepository.UpdatePriceAsync(bean.ToDataPrice());
+
+            var detailsId = await this.detailsRepository.UpdateDetailsAsync(bean.ToDataDetails());
+
+            if (beanId != null && priceId != null && detailsId != null)
+            {
+                return beanId;
+            }
+
+            return null;
         }
 
         public async Task<bool> DeleteBeanAsync(string id)
@@ -38,22 +60,31 @@ namespace Domain.Logic
         {
             var bean = await this.beansRepository.GetBeanAsync(id);
 
-            // get bean prie
+            var price = await this.pricesRepository.GetPriceByBeanIdAsync(bean.Id);
 
-            // get bean deatils
+            var details = await this.detailsRepository.GetDetailsByBeanIdAsync(bean.Id);
 
-            return new Bean().FromDataBeans(bean);
+            return new Bean().FromDataEntities(bean, price, details);
         }
 
         public async Task<Bean> GetBeanOfTheDayAsync()
         {
             var bean = await this.beansRepository.GetBeanOfTheDayAsync();
 
-            // get bean prie
+            var price = await this.pricesRepository.GetPriceByBeanIdAsync(bean.Id);
 
-            // get bean deatils
+            var details = await this.detailsRepository.GetDetailsByBeanIdAsync(bean.Id);
 
-            return new Bean().FromDataBeans(bean);
+            await this.IterateBeanOfTheDay();
+
+            return new Bean().FromDataEntities(bean, price, details);
+        }
+
+        private async Task IterateBeanOfTheDay()
+        {
+            var beans = await this.beansRepository.GetAllBeansAsync();
+
+            // finish this
         }
     }
 }

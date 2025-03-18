@@ -9,9 +9,10 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddMvc();
-
 builder.Services.AddDbContext<Context>(options => options.UseInMemoryDatabase("AllTheBeans"));
 builder.Services.AddScoped<IBeansRepository, SqlBeanRepository>();
+builder.Services.AddScoped<IPricesRepository, SqlPricesRepository>();
+builder.Services.AddScoped<IDetailsRepository, SqlDetailsRepository>();
 builder.Services.AddScoped<IBeansDomain, BeansDomain>();
 
 builder.Services.AddControllers();
@@ -39,7 +40,9 @@ app.Lifetime.ApplicationStarted.Register(async() =>
     using (var scope = app.Services.CreateScope())
     {
         var beansRepository = scope.ServiceProvider.GetRequiredService<IBeansRepository>();
-        await new BeansMiddleware(beansRepository).Run();
+        var pricesRepository = scope.ServiceProvider.GetRequiredService<IPricesRepository>();
+        var detailsRepository = scope.ServiceProvider.GetRequiredService<IDetailsRepository>();
+        await new BeansMiddleware(beansRepository, pricesRepository, detailsRepository).Run();
     }
 });
 
