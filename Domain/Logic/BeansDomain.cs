@@ -60,9 +60,24 @@ namespace Domain.Logic
         {
             var bean = await this.beansRepository.GetBeanAsync(id);
 
+            if (bean == null)
+            {
+                return null;
+            }
+
             var price = await this.pricesRepository.GetPriceByBeanIdAsync(bean.Id);
+            
+            if (price == null)
+            {
+                return null;
+            }
 
             var details = await this.detailsRepository.GetDetailsByBeanIdAsync(bean.Id);
+
+            if (details == null)
+            {
+                return null;
+            }
 
             return new Bean().FromDataEntities(bean, price, details);
         }
@@ -71,9 +86,24 @@ namespace Domain.Logic
         {
             var bean = await this.beansRepository.GetBeanOfTheDayAsync();
 
+            if (bean == null)
+            {
+                return null;
+            }
+
             var price = await this.pricesRepository.GetPriceByBeanIdAsync(bean.Id);
+            
+            if (price == null)
+            {
+                return null;
+            }
 
             var details = await this.detailsRepository.GetDetailsByBeanIdAsync(bean.Id);
+
+            if (details == null)
+            {
+                return null;
+            }
 
             await this.IterateBeanOfTheDay();
 

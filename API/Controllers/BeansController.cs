@@ -19,7 +19,7 @@ public class BeansController : ControllerBase
         this.beansDomain = beansDomain;
     }
 
-    [HttpPost(Name = "PostBean")]
+    [HttpPost]
     public async Task<IActionResult> PostBean(Bean bean)
     {
         var createdBeanId = await this.beansDomain.CreateBeanAsync(bean.ToDomainBean());
@@ -32,7 +32,7 @@ public class BeansController : ControllerBase
         return BadRequest();
     }
 
-    [HttpPatch(Name = "PatchBean")]
+    [HttpPatch]
     public async Task<IActionResult> PatchBean(Bean bean)
     {
         var updatedBeanId = await this.beansDomain.UpdateBeanAsync(bean.ToDomainBean());
@@ -45,7 +45,7 @@ public class BeansController : ControllerBase
         return BadRequest();
     }
 
-    [HttpDelete(Name = "DeleteBean")]
+    [HttpDelete]
     public async Task<IActionResult> DeleteBean(string id)
     {
         var result = await this.beansDomain.DeleteBeanAsync(id);
@@ -58,7 +58,7 @@ public class BeansController : ControllerBase
         return NotFound();
     }
 
-    [HttpGet(Name = "GetById")]
+    [HttpGet("{id}")]
     public async Task<IActionResult> GetBean(string id)
     {
         var bean = await this.beansDomain.GetBeanAsync(id);
@@ -71,11 +71,16 @@ public class BeansController : ControllerBase
         return NotFound();
     }
 
-    [HttpGet(Name = "GetBeanOfTheDay")]
+    [HttpGet("BOTD")]
     public async Task<IActionResult> GetBeanOfTheDay()
     {
         var beanOfTheDay = await this.beansDomain.GetBeanOfTheDayAsync();
 
-       return Ok(beanOfTheDay);
+        if (beanOfTheDay != null)
+        {
+            return Ok(beanOfTheDay);
+        }
+
+       return NotFound();
     }
 }

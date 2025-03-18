@@ -15,74 +15,53 @@ namespace Data.Persistence.Repository
 
         public async Task<string> CreateBeanAsync(Bean bean)
         {
-            await using (this.context)
-            {
-                await this.context.Beans.AddAsync(bean);
-                await this.context.SaveChangesAsync();
+            await this.context.Beans.AddAsync(bean);
+            await this.context.SaveChangesAsync();
 
-                return this.context.Beans.FirstOrDefault(b => b.Id == bean.Id).Id;
-            }
+            return this.context.Beans.FirstOrDefault(b => b.Id == bean.Id).Id;
         }
 
         public async Task CreateBeansAsync(IEnumerable<Bean> beans)
         {
-            await using (this.context)
-            {
-                await this.context.Beans.AddRangeAsync(beans);
-                await this.context.SaveChangesAsync();
-            }
+            await this.context.Beans.AddRangeAsync(beans);
+            await this.context.SaveChangesAsync();
         }
 
         public async Task<string> UpdateBeanAsync(Bean bean)
         {
-            await using (this.context)
-            {
-                this.context.Beans.UpdateRange(bean);
-                await this.context.SaveChangesAsync();
+            this.context.Beans.UpdateRange(bean);
+            await this.context.SaveChangesAsync();
 
-                return this.context.Beans.FirstOrDefault(b => b.Id == bean.Id).Id;
-            }
+            return this.context.Beans.FirstOrDefault(b => b.Id == bean.Id).Id;
         }
 
         public async Task<bool> DeleteBeanAsync(string id)
         {
-            await using (this.context)
+            var bean = await this.context.Beans.FirstOrDefaultAsync(b => b.Id == id);
+            
+            if (bean != null)
             {
-                var bean = await this.context.Beans.FirstOrDefaultAsync(b => b.Id == id);
-                
-                if (bean != null)
-                {
-                    this.context.Beans.Remove(bean);
-                    await this.context.SaveChangesAsync();
-                    return true;
-                }
-
-                return false;
+                this.context.Beans.Remove(bean);
+                await this.context.SaveChangesAsync();
+                return true;
             }
+
+            return false;
         }
 
         public async Task<Bean> GetBeanAsync(string id)
         {
-            await using (this.context)
-            {
-                return await this.context.Beans.FirstOrDefaultAsync(b => b.Id == id);
-            }
+            return await this.context.Beans.FirstOrDefaultAsync(b => b.Id == id);
         }
 
         public async Task<IEnumerable<Bean>> GetAllBeansAsync()
         {
-            await using (this.context)
-            {
-                return await this.context.Beans.ToListAsync();
-            }
+            return await this.context.Beans.ToListAsync();
         }
 
         public async Task<Bean> GetBeanOfTheDayAsync()
         {
-            await using (this.context)
-            {
-                return await this.context.Beans.FirstOrDefaultAsync(b => b.IsBOTD);
-            }
+            return await this.context.Beans.FirstOrDefaultAsync(b => b.IsBOTD);
         }
     }
 }

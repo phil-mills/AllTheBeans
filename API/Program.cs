@@ -35,7 +35,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Lifetime.ApplicationStarted.Register(async() => 
+app.Lifetime.ApplicationStarted.Register(async () => 
 {
     using (var scope = app.Services.CreateScope())
     {

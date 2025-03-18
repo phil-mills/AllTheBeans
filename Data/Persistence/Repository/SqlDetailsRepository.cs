@@ -19,58 +19,43 @@ namespace Data.Persistence.Repository
 
         public async Task<string> CreateDetailsAsync(Details details)
         {
-            await using (this.context)
-            {
-                await this.context.Details.AddAsync(details);
-                await this.context.SaveChangesAsync();
+            await this.context.Details.AddAsync(details);
+            await this.context.SaveChangesAsync();
 
-                return this.context.Prices.FirstOrDefault(b => b.Id == details.Id).Id;
-            }
+            return this.context.Prices.FirstOrDefault(b => b.Id == details.Id).Id;
         }
 
         public async Task CreateDetailsAsync(IEnumerable<Details> details)
         {
-            await using (this.context)
-            {
-                await this.context.Details.AddRangeAsync(details);
-                await this.context.SaveChangesAsync();
-            }
+            await this.context.Details.AddRangeAsync(details);
+            await this.context.SaveChangesAsync();
         }
 
         public async Task<string> UpdateDetailsAsync(Details details)
         {
-            await using (this.context)
-            {
-                this.context.Details.UpdateRange(details);
-                await this.context.SaveChangesAsync();
+            this.context.Details.UpdateRange(details);
+            await this.context.SaveChangesAsync();
 
-                return this.context.Prices.FirstOrDefault(b => b.Id == details.Id).Id;
-            }
+            return this.context.Prices.FirstOrDefault(b => b.Id == details.Id).Id;
         }
 
         public async Task<bool> DeleteDetailsAsync(string id)
         {
-            await using (this.context)
+            var details = await this.context.Details.FirstOrDefaultAsync(b => b.Id == id);
+
+            if (details != null)
             {
-                var details = await this.context.Details.FirstOrDefaultAsync(b => b.Id == id);
-
-                if (details != null)
-                {
-                    this.context.Details.Remove(details);
-                    await this.context.SaveChangesAsync();
-                    return true;
-                }
-
-                return false;
+                this.context.Details.Remove(details);
+                await this.context.SaveChangesAsync();
+                return true;
             }
+
+            return false;
         }
 
         public async Task<Details> GetDetailsByBeanIdAsync(string id)
         {
-            await using (this.context)
-            {
-                return await this.context.Details.FirstOrDefaultAsync(b => b.BeanId == id);
-            }
+            return await this.context.Details.FirstOrDefaultAsync(b => b.BeanId == id);
         }
     }
 }
