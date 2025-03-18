@@ -105,16 +105,7 @@ namespace Domain.Logic
                 return null;
             }
 
-            await this.IterateBeanOfTheDay();
-
             return new Bean().FromDataEntities(bean, price, details);
-        }
-
-        private async Task IterateBeanOfTheDay()
-        {
-            var beans = await this.beansRepository.GetAllBeansAsync();
-
-            // finish this
         }
     }
 }

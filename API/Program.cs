@@ -42,7 +42,9 @@ app.Lifetime.ApplicationStarted.Register(async () =>
         var beansRepository = scope.ServiceProvider.GetRequiredService<IBeansRepository>();
         var pricesRepository = scope.ServiceProvider.GetRequiredService<IPricesRepository>();
         var detailsRepository = scope.ServiceProvider.GetRequiredService<IDetailsRepository>();
-        await new BeansMiddleware(beansRepository, pricesRepository, detailsRepository).Run();
+        var botdRepository = scope.ServiceProvider.GetRequiredService<IBOTDRepository>();
+        await new BeansMiddleware(beansRepository, pricesRepository, detailsRepository, botdRepository).RunAsync();
+        await new BOTDMiddleware(beansRepository, botdRepository).RunAsync();
     }
 });
 
